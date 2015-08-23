@@ -9,8 +9,10 @@ urls = (
     '/', 'Index',
     '/del/(\d+)', 'Delete',
     '/json/issue/(\d+)','Issue',
-    '/json/user/(\d+)','User'
-       )
+    '/json/user/(\d+)','User',
+    '/(.*.ico)', 'StaticFile',   
+    '/(.*.js)', 'StaticFile', 
+   )
 
 
 ### Templates
@@ -69,6 +71,9 @@ class User:
         web.header('Content-Type', 'application/json')
         return json.dumps(list(model.get_user(id)),sort_keys=True,indent=2)
 
+class StaticFile:  
+    def GET(self, file):  
+        web.seeother('/static/'+file); 
 
 app = web.application(urls, globals())
 
