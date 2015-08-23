@@ -1,12 +1,15 @@
 """ Basic todo list using webpy 0.3 """
 import web
 import model
+import json
 
 ### Url mappings
 
 urls = (
     '/', 'Index',
-    '/del/(\d+)', 'Delete'
+    '/del/(\d+)', 'Delete',
+    '/json/issue/(\d+)','Issue',
+    '/json/user/(\d+)','User'
        )
 
 
@@ -48,6 +51,23 @@ class Delete:
         id = int(id)
         model.del_todo(id)
         raise web.seeother('/')
+
+class Issue:
+
+    def GET(self, id):
+        """ get issue json  """
+        id = int(id)
+        web.header('Content-Type', 'application/json')
+        # print json.dumps(list(model.get_issue(id)),sort_keys=True,indent=2)
+        return json.dumps(list(model.get_issue(id)),sort_keys=True,indent=2)
+
+class User:
+
+    def GET(self, id):
+        """ get user json  """
+        id = int(id)
+        web.header('Content-Type', 'application/json')
+        return json.dumps(list(model.get_user(id)),sort_keys=True,indent=2)
 
 
 app = web.application(urls, globals())

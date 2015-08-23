@@ -8,7 +8,11 @@ $def with (todos, form)
 $for todo in todos:
     <tr>
         <td>$todo.title</td>
-        <td>
+        <td>$todo.detail</td>
+       <td>$todo.parent</td>
+       <td>$todo.user</td>
+       <td>$todo.isArticle</td>
+       <td>
             <form action="/del/$todo.id" method="post">
                 <input type="submit" value="Delete"/>
             </form>
