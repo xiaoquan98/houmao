@@ -1,19 +1,19 @@
-$def with (todos, form)
+$def with (issues, form)
 
 <table>
     <tr>
         <th>What to do ?</th>
         <th></th>
     </tr>
-$for todo in todos:
+$for issue in issues:
     <tr>
-        <td>$todo.title</td>
-        <td>$todo.detail</td>
-       <td>$todo.parent</td>
-       <td>$todo.user</td>
-       <td>$todo.isArticle</td>
+        <td>$issue.title</td>
+        <td>$issue.detail</td>
+       <td>$issue.parent</td>
+       <td>$issue.user</td>
+       <td>$issue.isArticle</td>
        <td>
-            <form action="/del/$todo.id" method="post">
+            <form action="/del/$issue.id" method="post">
                 <input type="submit" value="Delete"/>
             </form>
         </td>

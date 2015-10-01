@@ -1,6 +1,4 @@
-CREATE TABLE todo (    id INT AUTO_INCREMENT,    title TEXT,    primary key (id));
-
-CREATE TABLE todo(
+CREATE TABLE issue(
 	id INT AUTO_INCREMENT,
 	title TEXT,
 	detail TEXT,

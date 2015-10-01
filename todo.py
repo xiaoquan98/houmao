@@ -1,4 +1,4 @@
-""" Basic todo list using webpy 0.3 """
+""" Basic issue list using webpy 0.3 """
 import web
 import model
 import json
@@ -25,23 +25,23 @@ class Index:
         web.form.Textbox('title', web.form.notnull, description="I need to:"),
         web.form.Textbox('detail',web.form.notnull,description="description"),
         web.form.Checkbox('isArticle'),
-        web.form.Button('Add todo'),
+        web.form.Button('Add issue'),
     )
 
     def GET(self):
         """ Show page """
-        todos = model.get_issues()
+        issues = model.get_issues()
         form = self.form()
-        return render.index(todos, form)
+        return render.index(issues, form)
 
     def POST(self):
         """ Add new entry """
         form = self.form()
         if not form.validates():
-            # todos = model.get_todos()
-            todos = model.get_issues()
-            return render.index(todos, form)
-        # model.new_todo(form.d.title)
+            # issues = model.get_issues()
+            issues = model.get_issues()
+            return render.index(issues, form)
+        # model.new_issue(form.d.title)
         model.new_issue(form.d.title,form.d.detail,"abx","user",form.d.isArticle)
         raise web.seeother('/')
 
@@ -51,7 +51,7 @@ class Delete:
     def POST(self, id):
         """ Delete based on ID """
         id = int(id)
-        model.del_todo(id)
+        model.del_issue(id)
         raise web.seeother('/')
 
 class Issue:
