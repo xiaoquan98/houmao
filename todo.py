@@ -36,6 +36,7 @@ class Index:
 
     def POST(self):
         """ Add new entry """
+        print "post something."
         form = self.form()
         if not form.validates():
             # issues = model.get_issues()
