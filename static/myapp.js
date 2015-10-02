@@ -2,12 +2,12 @@
 
     var postApp = angular.module('issueApp', []);
     postApp.controller('postController', ['$scope', '$http',  function($scope, $http) {
-       $scope.user = {};
+       $scope.input = {};
          $scope.submitForm = function() {
         $http({
           method  : 'POST',
           url     : '/',
-          data    : $scope.user, 
+          data    : $scope.input, 
           headers : {'Content-Type': 'application/x-www-form-urlencoded'} 
          })
           .success(function(data) {

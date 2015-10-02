@@ -1,4 +1,4 @@
-$def with (issues, form)
+$def with (issues)
 
 <div   ng-controller="postController" >
 <table>
@@ -8,7 +8,7 @@ $def with (issues, form)
     </tr>
 $for issue in issues:
     <tr>
-        <td>$issue.title</td>
+         <td>$issue.title</td>
         <td>$issue.detail</td>
        <td>$issue.parent</td>
        <td>$issue.user</td>
@@ -21,21 +21,20 @@ $for issue in issues:
     </tr>    
 </table>  
 
-<form name="userForm" ng-submit="submitForm()">
+<form name="issueForm" ng-submit="submitForm()">
     <div class="form-group">
-        <label>Name</label>
-        <input type="text" name="name" class="form-control" ng-model="user.name">
-        <span ng-show="errorName">{{errorName}}</span>
+        <label>Title</label>
+        <input type="text" name="title" class="form-control" ng-model="input.title">
+        <span ng-show="errorTitle">{{errorTitle}}</span>
     </div>
     <div class="form-group">
-        <label>Username</label>
-        <input type="text" name="username" class="form-control" ng-model="user.username">
-        <span ng-show="errorUserName">{{errorUserName}}</span>
+        <label>detail</label>
+        <input type="text" name="detail" class="form-control" ng-model="input.detail">
+        <span ng-show="errorDetail">{{errorDetail}}</span>
     </div>
     <div class="form-group">
-        <label>Email</label>
-        <input type="email" name="email" class="form-control" ng-model="user.email">
-        <span ng-show="errorEmail">{{errorEmail}}</span>
+        <label>isArticle</label>
+        <input type="checkbox" name="isArticle" class="form-control" ng-model="input.isArticle">
     </div>
     <button type="submit" class="btn btn-primary">Submit</button>
 </form>

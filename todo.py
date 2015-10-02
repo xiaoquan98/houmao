@@ -31,19 +31,20 @@ class Index:
     def GET(self):
         """ Show page """
         issues = model.get_issues()
-        form = self.form()
-        return render.index(issues, form)
+        # for  issue in issues:
+        #     print issue.title, issue.detail;
+        return render.index(issues)
 
     def POST(self):
         """ Add new entry """
         print "post something."
-        form = self.form()
-        if not form.validates():
-            # issues = model.get_issues()
+        data = json.loads(web.data().decode("utf-8-sig"));
+        print data;
+        print "title = %s" %data["title"].encode("utf-8");
+        if not data["title"]:
             issues = model.get_issues()
-            return render.index(issues, form)
-        # model.new_issue(form.d.title)
-        model.new_issue(form.d.title,form.d.detail,"abx","user",form.d.isArticle)
+            return render.index(issues)
+        model.new_issue(data["title"].encode("utf-8"),data["detail"].encode("utf-8"),"abx","user",data["isArticle"])
         raise web.seeother('/')
 
 
