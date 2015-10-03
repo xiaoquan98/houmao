@@ -13,5 +13,6 @@ CREATE TABLE issue(
 CREATE TABLE user(
 	id INT AUTO_INCREMENT,
 	name TEXT,
+	password TEXT,
 	primary key(id)
 )DEFAULT CHARSET=utf8;

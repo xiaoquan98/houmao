@@ -2,8 +2,10 @@
 
 angular form is next step.   http://tutsnare.com/post-form-data-using-angularjs/
 
+https://scotch.io/tutorials/submitting-ajax-forms-the-angularjs-way  how to submit form in Angular way, and json return format.
 https://docs.angularjs.org/api/ng/service/$http   this example show how to use $http .
 
+===============================================
 最开始没注意数据库的编码，使用默认的方式去连接：
 db = web.database(dbn='mysql', user='root', pw='lihuipeng007', host='localhost', db='test')  
   
@@ -59,3 +61,8 @@ CREATE TABLE IF NOT EXISTS `mydb` (
 说明：mysql版本：5.5.24
 
 =====================================================
+
+json return format : https://scotch.io/tutorials/submitting-ajax-forms-the-angularjs-way
+data.errors
+data.success 
+data.message

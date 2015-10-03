@@ -6,17 +6,18 @@
          $scope.submitForm = function() {
         $http({
           method  : 'POST',
-          url     : '/',
+          url     : '/json/issue/0',// new issue always use this address.
           data    : $scope.input, 
           headers : {'Content-Type': 'application/x-www-form-urlencoded'} 
          })
-          .success(function(data) {
+          .success(function(data) { // get return data here.
             if (data.errors) {
              $scope.errorName = data.errors.name;
               $scope.errorUserName = data.errors.username;
               $scope.errorEmail = data.errors.email;
             } else {
               $scope.message = data.message;
+              alert(data);
             }
           });
         };

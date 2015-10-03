@@ -14,18 +14,25 @@ db = web.database(dbn='mysql', db='myissuedb', user='root',pw='idore',charset='u
 def get_issues():
 	return db.select('issue', order='id')
 
-def del_issue(id):  
-	db.delete('issue', where="id=$id", vars=locals())
+def  get_issue(id):
+	return db.select('issue',where="id=$id", vars=locals())
 
 def new_issue(title,detail,parent,user,isArticle):
  	n = db.insert('issue',title=title,detail=detail,parent=parent,user=user,isArticle=isArticle)
  	return n;
 
-def  get_issue(id):
-	return db.select('issue',where="id=$id", vars=locals())
+def del_issue(id):  
+	db.delete('issue', where="id=$id", vars=locals())
+
+def get_users():
+	return db.select('user', order='id')
 
 def  get_user(id):
 	return db.select('user',where="id=$id", vars=locals())
+
+def new_user(name,password):
+	n = db.insert('user',name=name,password=password)
+	return n
 
 if __name__ == '__main__':
 	n = new_issue("hi",u"and hello大饭店梵蒂冈203",1,1,True);
