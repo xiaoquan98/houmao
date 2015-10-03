@@ -20,14 +20,6 @@ render = web.template.render('templates', base='base')
 
 
 class Index:
-
-    form = web.form.Form(
-        web.form.Textbox('title', web.form.notnull, description="I need to:"),
-        web.form.Textbox('detail',web.form.notnull,description="description"),
-        web.form.Checkbox('isArticle'),
-        web.form.Button('Add issue'),
-    )
-
     def GET(self):
         """ Show page """
         issues = model.get_issues()

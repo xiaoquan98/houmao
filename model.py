@@ -14,14 +14,12 @@ db = web.database(dbn='mysql', db='myissuedb', user='root',pw='idore',charset='u
 def get_issues():
 	return db.select('issue', order='id')
 
-def new_issue(text):
-	db.insert('issue', title=text)
-
 def del_issue(id):  
 	db.delete('issue', where="id=$id", vars=locals())
 
 def new_issue(title,detail,parent,user,isArticle):
- 	db.insert('issue',title=title,detail=detail,parent=parent,user=user,isArticle=isArticle)
+ 	n = db.insert('issue',title=title,detail=detail,parent=parent,user=user,isArticle=isArticle)
+ 	return n;
 
 def  get_issue(id):
 	return db.select('issue',where="id=$id", vars=locals())
@@ -30,7 +28,7 @@ def  get_user(id):
 	return db.select('user',where="id=$id", vars=locals())
 
 if __name__ == '__main__':
-	new_issue("hi",u"and hello大饭店梵蒂冈",1,1,True);
-	issues = get_issues()
+	n = new_issue("hi",u"and hello大饭店梵蒂冈203",1,1,True);
+	issues= get_issue(n)
 	for  issue in issues:
-        		print issue.title, issue.detail#.decode("utf-8").encode("utf-8")
+        		print issue.title, issue.detail
