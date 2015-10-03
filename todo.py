@@ -26,7 +26,7 @@ class Index:
 
     def POST(self):
         """" do nothing with POST """
-        print "do nothing with POST."
+        # print "do nothing with POST."
         return
 
 class Delete:
@@ -44,13 +44,18 @@ class Issue:
         return json.dumps(list(model.get_issue(id)),sort_keys=True,indent=2)
 
     def POST(self,id):
-        data = json.loads(web.data().decode("utf-8-sig"));
-        if not data["title"]:
-            issues = model.get_issues()
-            return render.index(issues)
-        n = model.new_issue(data["title"],data["detail"],"abx","user",data["isArticle"])
         web.header('Content-Type', 'application/json')
-        return json.dumps(list(model.get_issue(n)),sort_keys=True,indent=2)
+        dout = {}
+        data = json.loads(web.data().decode("utf-8-sig"));
+        try:
+            n = model.new_issue(data["title"],data["detail"],"abx","user",data["isArticle"])
+            dout["success"] = True
+            dout["message"] = list(model.get_issues())
+        except (KeyError):
+            dout["success"] = False
+            dout["errors"] = "Title is required."
+        # print json.dumps(dout,sort_keys=True,indent=2)
+        return json.dumps(dout,sort_keys=True,indent=2)
 
 class User:
     def GET(self, id):

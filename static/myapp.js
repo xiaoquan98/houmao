@@ -12,12 +12,13 @@
          })
           .success(function(data) { // get return data here.
             if (data.errors) {
-             $scope.errorName = data.errors.name;
+              $scope.errorName = data.errors.name;
               $scope.errorUserName = data.errors.username;
               $scope.errorEmail = data.errors.email;
+              // alert("error happens.");
             } else {
               $scope.message = data.message;
-              alert(data);
+              // alert(data.message[0].detail);
             }
           });
         };

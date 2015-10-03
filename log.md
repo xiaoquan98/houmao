@@ -66,3 +66,7 @@ json return format : https://scotch.io/tutorials/submitting-ajax-forms-the-angul
 data.errors
 data.success 
 data.message
+
+The json library can parse JSON from strings or files. The library parses JSON into a Python dictionary or list. It can also convert Python dictionaries or lists into JSON strings.
+
+So we can use a dict with errors success and message.
