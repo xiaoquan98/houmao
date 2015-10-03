@@ -44,7 +44,7 @@ class Index:
         if not data["title"]:
             issues = model.get_issues()
             return render.index(issues)
-        model.new_issue(data["title"].encode("utf-8"),data["detail"].encode("utf-8"),"abx","user",data["isArticle"])
+        model.new_issue(data["title"],data["detail"],"abx","user",data["isArticle"])
         raise web.seeother('/')
 
 
