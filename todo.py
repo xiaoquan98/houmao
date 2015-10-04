@@ -7,9 +7,8 @@ import json
 
 urls = (
     '/', 'Index',
-    '/del/(\d+)', 'Delete',
-    '/json/issue/(\d+)','Issue',
-    '/json/user/(\d+)','User',
+    '/v1/issues/(\d+)','Issue',
+    '/v1/users/(\d+)','User',
     '/(.*.ico)', 'StaticFile',   
     '/(.*.js)', 'StaticFile', 
    )
@@ -29,12 +28,6 @@ class Index:
         # print "do nothing with POST."
         return
 
-class Delete:
-    def POST(self, id):
-        """ Delete based on ID """
-        id = int(id)
-        model.del_issue(id)
-        raise web.seeother('/')
 
 class Issue:
     def GET(self, id):
@@ -46,16 +39,26 @@ class Issue:
     def POST(self,id):
         web.header('Content-Type', 'application/json')
         dout = {}
-        data = json.loads(web.data().decode("utf-8-sig"));
+        din = json.loads(web.data().decode("utf-8-sig"));
         try:
-            n = model.new_issue(data["title"],data["detail"],"abx","user",data["isArticle"])
+            n = model.new_issue(din["title"],din["detail"],"abx","user",din["isArticle"])
             dout["success"] = True
             dout["message"] = list(model.get_issues())
         except (KeyError):
             dout["success"] = False
             dout["errors"] = "Title is required."
-        # print json.dumps(dout,sort_keys=True,indent=2)
+        finally:
+            # print json.dumps(dout,sort_keys=True,indent=2)
+            return json.dumps(dout,sort_keys=True,indent=2)
+            
+    def DELETE(self,id):
+        web.header('Content-Type', 'application/json')
+        id = int(id)
+        dout = {}
+        model.del_issue(id)
+        dout["success"] = True
         return json.dumps(dout,sort_keys=True,indent=2)
+
 
 class User:
     def GET(self, id):

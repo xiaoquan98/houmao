@@ -1,10 +1,10 @@
 var postApp = angular.module('issueApp', []);
 postApp.controller('postController', ['$scope', '$http',  function($scope, $http) {
    $scope.input = {};
-   $scope.submitForm = function() {
+   $scope.newIssue = function() {
     $http({
       method  : 'POST',
-      url     : '/json/issue/0',// new issue always use this address.
+      url     : '/v1/issues/0',// new issue always use this address.
       data    : $scope.input, 
       headers : {'Content-Type': 'application/x-www-form-urlencoded'} 
      })
@@ -20,4 +20,23 @@ postApp.controller('postController', ['$scope', '$http',  function($scope, $http
         }
       });
     };
-}]);
+    
+    $scope.removeIssue = function(id){
+        $http({
+          method  : 'DELETE',
+          url     : '/v1/issues/'+id,
+          data    : $scope.input, 
+          headers : {'Content-Type': 'application/x-www-form-urlencoded'} 
+         })
+          .success(function(data) { // get return data here.
+            if (data.success) {
+            //   alert("success to delete.");
+            } else {
+              alert("fail to delete.");
+            }
+          });
+        };
+        
+        
+    }    
+]);

@@ -14,14 +14,14 @@ $for issue in issues:
         <td>$issue.user</td>
         <td>$issue.isArticle</td>
         <td>
-            <form action="/del/$issue.id" method="post">
-                <input type="submit" value="Delete"/>
+            <form>
+                <input type="submit" value="Delete" ng-click="removeIssue($issue.id)"/>
             </form>
         </td>
     </tr>    
 </table>  
 
-<form name="issueForm" ng-submit="submitForm()">
+<form name="issueForm" ng-submit="newIssue()">
     <div class="form-group">
         <label>Title</label>
         <input type="text" name="title" class="form-control" ng-model="input.title">
