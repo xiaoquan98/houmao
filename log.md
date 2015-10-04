@@ -131,4 +131,27 @@ OAuth
 HTTP Basic Authentication 
 simply appending the API key to the query string
 
-===================================================
+========================= angular ajax data binding ==========================
+
+http://www.ng-newsletter.com/posts/beginner2expert-data-binding.html
+
+$scope.$apply(updateClock); // what this means?
+
+http://jimhoskins.com/2012/12/17/angularjs-and-apply.html
+
+That step that checks to see if any binding values have changed actually has a method, $scope.$digest(). That’s actually where the magic happens, but we almost never call it directly, instead we use $scope.$apply() which will call $scope.$digest() for you.
+
+$scope.$apply() takes a function or an Angular expression string, and executes it, then calls $scope.$digest() to update any bindings or watchers.
+
+So, when do you need to call $apply()? Very rarely, actually. AngularJS actually calls almost all of your code within an $apply call. Events like ng-click, controller initialization, $http callbacks are all wrapped in $scope.$apply(). So you don’t need to call it yourself, in fact you can’t. Calling $apply inside $apply will throw an error.
+
+You do need to use it if you are going to run code in a new turn. And only if that turn isn’t being created from a method in the AngularJS library. Inside that new turn, you should wrap your code in $scope.$apply(). Here is an example. We are using setTimeout, which will execute a function in a new turn after a delay. Since Angular doesn’t know about that new turn, the update will not be reflected.
+
+============================ markdown editor ? ===============================
+https://github.com/zacharyvoase/markdoc/tree/master/src/markdoc
+
+
+=========================== bootstrap ============================
+bootstrap is powerful, we should use it sometime, but not now.
+
+

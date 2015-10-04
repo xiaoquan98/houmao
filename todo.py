@@ -11,6 +11,7 @@ urls = (
     '/v1/users/(\d+)','User',
     '/(.*.ico)', 'StaticFile',   
     '/(.*.js)', 'StaticFile', 
+    '/(.*.css)', 'StaticFile', 
    )
 
 
