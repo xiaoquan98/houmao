@@ -1,7 +1,8 @@
 var postApp = angular.module('issueApp', []);
 postApp.controller('postController', ['$scope', '$http',  function($scope, $http) {
+    $scope.issues = [];
    $scope.input = {};
-   $scope.newIssue = function() {
+    $scope.newIssue = function() {
     $http({
       method  : 'POST',
       url     : '/v1/issues/0',// new issue always use this address.
@@ -15,27 +16,43 @@ postApp.controller('postController', ['$scope', '$http',  function($scope, $http
           $scope.errorEmail = data.errors.email;
           // alert("error happens.");
         } else {
-          $scope.message = data.message;
-          // alert(data.message[0].detail);
+          $scope.issues = data.message;
+        //   alert($scope.issues[0].title);
         }
       });
     };
     
     $scope.removeIssue = function(id){
-        $http({
-          method  : 'DELETE',
-          url     : '/v1/issues/'+id,
-          data    : $scope.input, 
-          headers : {'Content-Type': 'application/x-www-form-urlencoded'} 
-         })
-          .success(function(data) { // get return data here.
-            if (data.success) {
-            //   alert("success to delete.");
-            } else {
-              alert("fail to delete.");
-            }
-          });
-        };
+    $http({
+      method  : 'DELETE',
+      url     : '/v1/issues/'+id,
+      data    : $scope.input, 
+      headers : {'Content-Type': 'application/x-www-form-urlencoded'} 
+     })
+      .success(function(data) { // get return data here.
+        if (data.success) {
+        //   alert("success to delete.");
+            $scope.issues = data.message;
+            // alert($scope.issues[0].title);
+        } else {
+            alert("fail to delete.");
+        }
+      });
+    };
+
+    $scope.getIssues = function(){
+    $http({
+      method  : 'GET',
+      url     : '/v1/issues',
+      data    : $scope.input, 
+      headers : {'Content-Type': 'application/x-www-form-urlencoded'} 
+     })
+      .success(function(data) { // get return data here.
+        if (data.success) {
+            $scope.issues = data.message;
+        }
+      });
+    };
         
         
     }    

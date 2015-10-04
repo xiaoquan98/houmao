@@ -7,6 +7,7 @@ import json
 
 urls = (
     '/', 'Index',
+    '/v1/issues','Issues',
     '/v1/issues/(\d+)','Issue',
     '/v1/users/(\d+)','User',
     '/(.*.ico)', 'StaticFile',   
@@ -30,12 +31,24 @@ class Index:
         return
 
 
+class Issues:
+    def GET(self):
+        """ get issue json  """
+        web.header('Content-Type', 'application/json')
+        dout = {};
+        dout["success"] = True
+        dout["message"] = list(model.get_issues())
+        return json.dumps(dout,sort_keys=True,indent=2)
+        
 class Issue:
     def GET(self, id):
         """ get issue json  """
         id = int(id)
         web.header('Content-Type', 'application/json')
-        return json.dumps(list(model.get_issue(id)),sort_keys=True,indent=2)
+        dout = {};
+        dout["success"] = True
+        dout["message"] = list(model.get_issue(id))
+        return json.dumps(dout,sort_keys=True,indent=2)
 
     def POST(self,id):
         web.header('Content-Type', 'application/json')
@@ -57,7 +70,11 @@ class Issue:
         id = int(id)
         dout = {}
         model.del_issue(id)
+        # dout["success"] = True
+        # return json.dumps(dout,sort_keys=True,indent=2)
+        dout = {};
         dout["success"] = True
+        dout["message"] = list(model.get_issues())
         return json.dumps(dout,sort_keys=True,indent=2)
 
 

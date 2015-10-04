@@ -1,26 +1,21 @@
 $def with (issues)
 
-<div   ng-controller="postController" >
-<table>
-    <tr>
-        <th>What to do ?</th>
-        <th></th>
-    </tr>
-$for issue in issues:
-    <tr>
-        <td>$issue.title</td>
-        <td>$issue.detail</td>
-        <td>$issue.parent</td>
-        <td>$issue.user</td>
-        <td>$issue.isArticle</td>
-        <td>
-            <form>
-                <input type="submit" value="Delete" ng-click="removeIssue($issue.id)"/>
-            </form>
-        </td>
-    </tr>    
-</table>  
+<div ng-controller="postController" >
+<h2>Issue list</h2>
+<input type="submit" value="Reflash" ng-click="getIssues()"/>
 
+<div ng-repeat="issue in issues"> 
+    <div>
+        <div>{{issue.title}}</div>
+        <div>{{issue.detail}}</div>
+        <div>{{issue.parent}}</div>
+        <div>{{issue.user}}</div>
+        <div>{{issue.isArticle}}</div>
+        <input type="submit" value="Delete" ng-click="removeIssue(issue.id)"/>
+    </div>
+</div>
+
+<h2>New issue:</h2>
 <form name="issueForm" ng-submit="newIssue()">
     <div class="form-group">
         <label>Title</label>
@@ -34,7 +29,7 @@ $for issue in issues:
     </div>
     <div class="form-group">
         <label>isArticle</label>
-        <input type="checkbox" name="isArticle" class="form-control" ng-model="input.isArticle">
+        <input type="checkbox" name="isArticle" ng-model="input.isArticle">
     </div>
     <button type="submit" class="btn btn-primary">Submit</button>
 </form>
