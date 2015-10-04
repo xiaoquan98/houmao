@@ -8,12 +8,12 @@ $def with (issues)
     </tr>
 $for issue in issues:
     <tr>
-         <td>$issue.title</td>
+        <td>$issue.title</td>
         <td>$issue.detail</td>
-       <td>$issue.parent</td>
-       <td>$issue.user</td>
-       <td>$issue.isArticle</td>
-       <td>
+        <td>$issue.parent</td>
+        <td>$issue.user</td>
+        <td>$issue.isArticle</td>
+        <td>
             <form action="/del/$issue.id" method="post">
                 <input type="submit" value="Delete"/>
             </form>
