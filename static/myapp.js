@@ -53,6 +53,10 @@ postApp.controller('postController', ['$scope', '$http',  function($scope, $http
         }
       });
     };
+
+    $scope.init = function(ijson){
+        $scope.issues = ijson;
+    };
         
         
     }    

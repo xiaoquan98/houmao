@@ -1,6 +1,6 @@
-$def with (issues)
+$def with (issues_json)
 
-<div ng-controller="postController" >
+<div ng-controller="postController" ng-init="init($issues_json)">
 <h2>Issue list</h2>
 <input type="submit" value="Reflash" ng-click="getIssues()"/>
 

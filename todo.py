@@ -22,8 +22,8 @@ render = web.template.render('templates', base='base')
 class Index:
     def GET(self):
         """ Show page """
-        issues = model.get_issues()
-        return render.index(issues)
+        issues = list(model.get_issues())
+        return render.index(json.dumps(issues))
 
     def POST(self):
         """" do nothing with POST """
