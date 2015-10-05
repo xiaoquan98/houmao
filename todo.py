@@ -2,6 +2,7 @@
 import web
 import model
 import json
+import datetime
 
 ### Url mappings
 
@@ -19,11 +20,19 @@ urls = (
 ### Templates
 render = web.template.render('templates', base='base')
 
+json_serial = lambda obj: (
+    obj.isoformat()
+    if isinstance(obj, datetime.datetime)
+    or isinstance(obj, datetime.date)
+    else None
+)
+
+
 class Index:
     def GET(self):
         """ Show page """
         issues = list(model.get_issues())
-        return render.index(json.dumps(issues))
+        return render.index(json.dumps(issues,default=json_serial))
 
     def POST(self):
         """" do nothing with POST """
@@ -38,7 +47,7 @@ class Issues:
         dout = {};
         dout["success"] = True
         dout["message"] = list(model.get_issues())
-        return json.dumps(dout,sort_keys=True,indent=2)
+        return json.dumps(dout,sort_keys=True,indent=2,default=json_serial)
         
 class Issue:
     def GET(self, id):
@@ -48,7 +57,7 @@ class Issue:
         dout = {};
         dout["success"] = True
         dout["message"] = list(model.get_issue(id))
-        return json.dumps(dout,sort_keys=True,indent=2)
+        return json.dumps(dout,sort_keys=True,indent=2,default=json_serial)
 
     def POST(self,id):
         web.header('Content-Type', 'application/json')
@@ -63,7 +72,7 @@ class Issue:
             dout["errors"] = "Title is required."
         finally:
             # print json.dumps(dout,sort_keys=True,indent=2)
-            return json.dumps(dout,sort_keys=True,indent=2)
+            return json.dumps(dout,sort_keys=True,indent=2,default=json_serial)
             
     def DELETE(self,id):
         web.header('Content-Type', 'application/json')
@@ -75,7 +84,7 @@ class Issue:
         dout = {};
         dout["success"] = True
         dout["message"] = list(model.get_issues())
-        return json.dumps(dout,sort_keys=True,indent=2)
+        return json.dumps(dout,sort_keys=True,indent=2,default=json_serial)
 
 
 class User:
@@ -93,6 +102,7 @@ class User:
 class StaticFile:  
     def GET(self, file):  
         web.seeother('/static/'+file); 
+        
 
 app = web.application(urls, globals())
 

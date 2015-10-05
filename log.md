@@ -29,7 +29,7 @@ if sys.getdefaultencoding() != default_encoding:
     sys.setdefaultencoding(default_encoding) 
 中文显示终于正常了~~~不容易啊。。
 
-===================== mysql utf8: db connect tables ========================
+================ mysql utf8: db connect tables ========================
 
 1、检查并修改mysql的my.ini的配置文件
 
@@ -131,7 +131,7 @@ OAuth
 HTTP Basic Authentication 
 simply appending the API key to the query string
 
-========================= angular ajax data binding ==========================
+====================== angular ajax data binding ======================
 
 http://www.ng-newsletter.com/posts/beginner2expert-data-binding.html
 
@@ -147,11 +147,35 @@ So, when do you need to call $apply()? Very rarely, actually. AngularJS actually
 
 You do need to use it if you are going to run code in a new turn. And only if that turn isn’t being created from a method in the AngularJS library. Inside that new turn, you should wrap your code in $scope.$apply(). Here is an example. We are using setTimeout, which will execute a function in a new turn after a delay. Since Angular doesn’t know about that new turn, the update will not be reflected.
 
-============================ markdown editor ? ===============================
+==================== markdown editor ? =======================
 https://github.com/zacharyvoase/markdoc/tree/master/src/markdoc
 
 
-=========================== bootstrap ============================
+====================== bootstrap ======================
 bootstrap is powerful, we should use it sometime, but not now.
+
+================== UTC ==================
+CREATE TABLE items (
+    id serial primary key,
+    author_id int references users,
+    body text,
+    created timestamp default (current_timestamp at time zone 'utc')
+);
+
+http://stackoverflow.com/questions/455580/json-datetime-between-python-and-javascript 
+
+You can add the 'default' parameter to json.dumps to handle this:
+
+date_handler = lambda obj: (
+    obj.isoformat()
+    if isinstance(obj, datetime.datetime)
+    or isinstance(obj, datetime.date)
+    else None
+)
+json.dumps(datetime.datetime.now(), default=date_handler)
+'"2010-04-20T20:08:21.634121"'
+Which is ISO 8601 format.
+
+default(obj) is a function that should return a serializable version of obj or raise TypeError. The default simply raises TypeError.
 
 
