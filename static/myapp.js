@@ -60,11 +60,24 @@ app.controller('postController', ['$scope', '$http',  function($scope, $http) {
     $scope.markedoutputText = "";
     $scope.$watch('markedinputText', function(current, original) {
       $scope.markedoutputText = marked(current);
-      $scope.input.detail = $scope.markedoutputText;
+      $scope.input.detail = current;
     });
         
     }    
 ]);
+
+
+app.directive("markdown", function(){
+  return function(scope, element, attr){
+      var update = function(){
+          element.html(marked(element.html()));
+      };
+      scope.$watch(attr.ngModel, function(){
+          update();
+      });
+      attr.$set("ngTrim", "false");
+  };
+});
 
 
 app.directive("autoGrow", function(){
@@ -79,6 +92,7 @@ app.directive("autoGrow", function(){
       attr.$set("ngTrim", "false");
   };
 });
+
 
 marked.setOptions({
     renderer: new marked.Renderer(),

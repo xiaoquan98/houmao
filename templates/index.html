@@ -8,7 +8,7 @@ $def with (issues_json)
     <div>
         <h3>{{issue.title}}</h3>
         <div><span>Created @ {{issue.created}}</span><span>Modified @ {{issue.modified}}</span></div>
-        <div ng-bind-html="thisCanBeusedInsideNgBindHtml">{{issue.detail}}</div>
+        <div ng-model="issue.detail" markdown>{{issue.detail}}</div>
         <div>{{issue.parent}}</div>
         <div>{{issue.user}}</div>
         <div>{{issue.isArticle}}</div>
