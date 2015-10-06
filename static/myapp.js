@@ -1,7 +1,7 @@
-var postApp = angular.module('issueApp', []);
-postApp.controller('postController', ['$scope', '$http',  function($scope, $http) {
+var app = angular.module('issueApp', ['ngSanitize']);
+app.controller('postController', ['$scope', '$http',  function($scope, $http) {
     $scope.issues = [];
-   $scope.input = {};
+    $scope.input = {};
     $scope.newIssue = function() {
     $http({
       method  : 'POST',
@@ -54,7 +54,51 @@ postApp.controller('postController', ['$scope', '$http',  function($scope, $http
         $scope.input.user = 0;
         $scope.input.detail = "";
     };
-        
+    
         
     }    
 ]);
+
+
+app.directive("autoGrow", function(){
+  return function(scope, element, attr){
+      var update = function(){
+          element.css("height", "auto");
+          element.css("height", element[0].scrollHeight + "px");
+      };
+      scope.$watch(attr.ngModel, function(){
+          update();
+      });
+      attr.$set("ngTrim", "false");
+  };
+});
+
+app.controller('markedController', ['$scope', function($scope) {
+
+    var markdown = this;
+    
+    this.inputText = '';
+    
+    $scope.$watch('marked.inputText', function(current, original) {
+      markdown.outputText = marked(current);
+    });
+}]);
+
+marked.setOptions({
+    renderer: new marked.Renderer(),
+    gfm: true,
+    tables: true,
+    breaks: false,
+    pedantic: false,
+    sanitize: false, // if false -> allow plain old HTML ;)
+    smartLists: true,
+    smartypants: false,
+    highlight: function (code, lang) {
+      if (lang) {
+        return hljs.highlight(lang, code).value;
+      } else {
+        return hljs.highlightAuto(code).value;
+      }
+    }
+});
+

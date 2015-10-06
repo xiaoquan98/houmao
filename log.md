@@ -178,4 +178,8 @@ Which is ISO 8601 format.
 
 default(obj) is a function that should return a serializable version of obj or raise TypeError. The default simply raises TypeError.
 
+======================== Markdown textarea ===========================
+Copy from this example
+http://wasilak.github.io/GitHub-flavored-markdown-with-angularjs-and-marked/
+
 
