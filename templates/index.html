@@ -25,7 +25,17 @@ $def with (issues_json)
     </div>
     <div class="form-group">
         <label>detail</label>
-        <textarea type="text" name="detail" class="form-control" ng-model="input.detail"></textarea>
+        <!--<textarea type="text" name="detail" class="form-control" ng-model="input.detail"></textarea>-->
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-sm-6">
+              <textarea class="form-control" id="inputText" ng-model="markedinputText" auto-grow></textarea>
+            </div>
+            <div class="col-sm-6">
+              <div id="outputText" ng-bind-html="markedoutputText"></div>
+            </div>
+          </div>
+        </div>
     </div>
     <div class="form-group">
         <label>isArticle</label>
@@ -36,16 +46,6 @@ $def with (issues_json)
 
 </div>
 
-<div class="container-fluid" ng-controller="markedController as marked">
-  <div class="row">
-    <div class="col-sm-6">
-      <textarea class="form-control" id="inputText" ng-model="marked.inputText" auto-grow></textarea>
-    </div>
-    <div class="col-sm-6">
-      <div id="outputText" ng-bind-html="marked.outputText"></div>
-    </div>
-  </div>
-</div>
 
 
 

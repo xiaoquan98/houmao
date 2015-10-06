@@ -55,6 +55,13 @@ app.controller('postController', ['$scope', '$http',  function($scope, $http) {
         $scope.input.detail = "";
     };
     
+    // markdown function here
+    $scope.markedinputText = "";
+    $scope.markedoutputText = "";
+    $scope.$watch('markedinputText', function(current, original) {
+      $scope.markedoutputText = marked(current);
+      $scope.input.detail = $scope.markedoutputText;
+    });
         
     }    
 ]);
@@ -72,17 +79,6 @@ app.directive("autoGrow", function(){
       attr.$set("ngTrim", "false");
   };
 });
-
-app.controller('markedController', ['$scope', function($scope) {
-
-    var markdown = this;
-    
-    this.inputText = '';
-    
-    $scope.$watch('marked.inputText', function(current, original) {
-      markdown.outputText = marked(current);
-    });
-}]);
 
 marked.setOptions({
     renderer: new marked.Renderer(),
