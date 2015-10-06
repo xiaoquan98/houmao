@@ -182,4 +182,12 @@ default(obj) is a function that should return a serializable version of obj or r
 Copy from this example
 http://wasilak.github.io/GitHub-flavored-markdown-with-angularjs-and-marked/
 
+========================= sce.trustAsHtml ==========================
+http://stackoverflow.com/questions/9381926/angularjs-insert-html-into-view
+Insert HTML into view
+For Angular 1.3, use ng-bind-html in the HTML:
+<div ng-bind-html="thisCanBeusedInsideNgBindHtml"></div>
+and use $sce.trustAsHtml() in the controller to convert the html string.
+$scope.thisCanBeusedInsideNgBindHtml = $sce.trustAsHtml(someHtmlVar);
 
+$sce is a service that provides Strict Contextual Escaping services to AngularJS.
