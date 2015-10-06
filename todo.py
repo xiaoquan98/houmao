@@ -63,8 +63,10 @@ class Issue:
         web.header('Content-Type', 'application/json')
         dout = {}
         din = json.loads(web.data().decode("utf-8-sig"));
+        if not din["parent"]:
+            din["parent"] = 0;# root mao
         try:
-            n = model.new_issue(din["title"],din["detail"],"abx","user",din["isArticle"])
+            n = model.new_issue(din["title"],din["detail"],din["parent"],"user",din["isArticle"])
             dout["success"] = True
             dout["message"] = list(model.get_issues())
         except (KeyError):

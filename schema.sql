@@ -18,3 +18,5 @@ CREATE TABLE user(
     password TEXT,
     primary key(id)
 )DEFAULT CHARSET=utf8;
+
+drop table issue;// to remove table

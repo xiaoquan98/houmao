@@ -10,14 +10,8 @@ postApp.controller('postController', ['$scope', '$http',  function($scope, $http
       headers : {'Content-Type': 'application/x-www-form-urlencoded'} 
      })
       .success(function(data) { // get return data here.
-        if (data.errors) {
-          $scope.errorName = data.errors.name;
-          $scope.errorUserName = data.errors.username;
-          $scope.errorEmail = data.errors.email;
-          // alert("error happens.");
-        } else {
+        if(data.success){
           $scope.issues = data.message;
-        //   alert($scope.issues[0].title);
         }
       });
     };
@@ -31,9 +25,8 @@ postApp.controller('postController', ['$scope', '$http',  function($scope, $http
      })
       .success(function(data) { // get return data here.
         if (data.success) {
-        //   alert("success to delete.");
+            //   alert("success to delete.");
             $scope.issues = data.message;
-            // alert($scope.issues[0].title);
         } else {
             alert("fail to delete.");
         }
@@ -56,6 +49,10 @@ postApp.controller('postController', ['$scope', '$http',  function($scope, $http
 
     $scope.init = function(ijson){
         $scope.issues = ijson;
+        $scope.input.isArticle = false;
+        $scope.input.parent = 0;
+        $scope.input.user = 0;
+        $scope.input.detail = "";
     };
         
         

@@ -6,12 +6,14 @@ $def with (issues_json)
 
 <div ng-repeat="issue in issues"> 
     <div>
-        <div>{{issue.title}}</div>
+        <h3>{{issue.title}}</h3>
+        <div><span>Created @ {{issue.created}}</span><span>Modified @ {{issue.modified}}</span></div>
         <div>{{issue.detail}}</div>
         <div>{{issue.parent}}</div>
         <div>{{issue.user}}</div>
         <div>{{issue.isArticle}}</div>
         <input type="submit" value="Delete" ng-click="removeIssue(issue.id)"/>
+        <input type="submit" value="Comment" ng-click="input.parent=issue.id"/>
     </div>
 </div>
 
@@ -19,13 +21,11 @@ $def with (issues_json)
 <form name="issueForm" ng-submit="newIssue()">
     <div class="form-group">
         <label>Title</label>
-        <input type="text" name="title" class="form-control" ng-model="input.title">
-        <span ng-show="errorTitle">{{errorTitle}}</span>
+        <input type="text" name="title" class="form-control" ng-model="input.title" required>
     </div>
     <div class="form-group">
         <label>detail</label>
         <input type="text" name="detail" class="form-control" ng-model="input.detail">
-        <span ng-show="errorDetail">{{errorDetail}}</span>
     </div>
     <div class="form-group">
         <label>isArticle</label>
