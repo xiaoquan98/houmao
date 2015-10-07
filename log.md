@@ -191,3 +191,10 @@ and use $sce.trustAsHtml() in the controller to convert the html string.
 $scope.thisCanBeusedInsideNgBindHtml = $sce.trustAsHtml(someHtmlVar);
 
 $sce is a service that provides Strict Contextual Escaping services to AngularJS.
+
+===================== design =========================
+1. index.html get 10 or 20 lastest articles; next page get older
+2. click article to ajax show article and comments; if this article is comment of something , show that in some way
+3. how to make a ajax url?
+4. how to get latest 10 , and how next/
+5. 

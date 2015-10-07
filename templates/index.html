@@ -1,35 +1,36 @@
 $def with (issues_json)
 
 <div ng-controller="postController" ng-init="init($issues_json)">
-<h2>Issue list</h2>
+<h2>毛毛</h2>
 <input type="submit" value="Reflash" ng-click="getIssues()"/>
 
 <div ng-repeat="issue in issues"> 
-    <div>
+    <div ng-show="issue.isArticle">
         <h3>{{issue.title}}</h3>
-        <div><span>Created @ {{issue.created}}</span><span>Modified @ {{issue.modified}}</span></div>
+        <div>
+            <span ng-show="issue.user">user {{issue.user}} </span><span> Created @ {{issue.created}}</span>
+            <span ng-hide="issue.created == issue.modified">  Last modified @ {{issue.modified}}</span>
+        </div>
         <div ng-model="issue.detail" markdown>{{issue.detail}}</div>
-        <div>{{issue.parent}}</div>
-        <div>{{issue.user}}</div>
-        <div>{{issue.isArticle}}</div>
+        <div ng-show="issue.parent">从{{issue.parent}}#毛吹出来...</div>
         <input type="submit" value="Delete" ng-click="removeIssue(issue.id)"/>
         <input type="submit" value="Comment" ng-click="input.parent=issue.id"/>
     </div>
 </div>
 
-<h2>New issue:</h2>
 <form name="issueForm" ng-submit="newIssue()">
-    <div class="form-group">
-        <label>Title</label>
-        <input type="text" name="title" class="form-control" ng-model="input.title" required>
+    <h2>吹一吹...</h2>
+    <div class="form-group" ng-show="input.isArticle">
+        <label>标题</label>
+        <input type="text" name="title" class="form-control" ng-model="input.title" ng-required="input.isArticle">
     </div>
     <div class="form-group">
-        <label>detail</label>
-        <!--<textarea type="text" name="detail" class="form-control" ng-model="input.detail"></textarea>-->
+        <label>正文</label>
         <div class="container-fluid">
           <div class="row">
             <div class="col-sm-6">
-              <textarea class="form-control" id="inputText" ng-model="markedinputText" auto-grow></textarea>
+              <textarea class="form-control" id="inputText" 
+              ng-model="markedinputText" auto-grow ng-required="input.isArticle == false"></textarea>
             </div>
             <div class="col-sm-6">
               <div id="outputText" ng-bind-html="markedoutputText"></div>
