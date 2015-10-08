@@ -198,3 +198,27 @@ $sce is a service that provides Strict Contextual Escaping services to AngularJS
 3. how to make a ajax url?
 4. how to get latest 10 , and how next/
 5. 
+
+
+Rather than using your JavaScript to drive your URLs, let your URLs drive your JavaScript. Let the window.onhashchange event handler do all the work. Everything else should just change the hash.
+
+You don't even need click handlers for links, just set the url to the right hash:
+
+<a href="#red">Red</a>
+Then, your hashchange handler takes care of the rest:
+
+function hashChange() {
+    var page = location.hash.slice(1);
+    if (page) {
+        $('#content').load(page+".html #sub-content");
+        document.title = originalTitle + ' – ' + page;
+        switch (page) {
+            // page specific functionality goes here
+            case "red":
+            case "yellow":
+                $("body").removeClass("red yellow").addClass(page);
+                break;
+        }
+    }
+}
+The only reason to change the hash at all is if you want to be able to come back to the page and have it load the same state based on the URL. So, you already have the requirement to let the URL drive the JavaScript, right? Else why are you changing the hash? Moving functionality out of click handlers, and into the hashchange event only simplifies things.
