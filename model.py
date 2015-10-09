@@ -10,10 +10,17 @@ if sys.getdefaultencoding() != default_encoding:
 #     print "sys encode utf-8"
 
 
-db = web.database(dbn='mysql', db='myissuedb', user='root',pw='idore',charset='utf8')
+db = web.database(dbn='mysql', db='myissuedb', user='root',pw='850201',charset='utf8')
 
 def get_issues():
-    return db.select('issue', order='id')
+    #OperationalError: (1049, "Unknown database 'myissuedb'")
+    #ProgrammingError: (1146, "Table 'myissuedb.issue' doesn't exist")
+    try:
+        return db.select('issue', order='id')
+    except OperOperationalError:
+        print "no this database."
+    except ProgrammingError:
+        print "no this table."
 
 def  get_issue(id):
     return db.select('issue',where="id=$id", vars=locals())

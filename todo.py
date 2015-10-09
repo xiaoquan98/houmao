@@ -10,6 +10,10 @@ urls = (
     '/', 'Index',
     '/v1/issues','Issues',
     '/v1/issues/(\d+)','Issue',
+    '/v2/issues/issue-(\d+)','Issue',
+    '/v2/issues/page-(\d+)','Issues',
+    '/v2/issues/issue-(\d+)/children','Children',
+    '/v2/issues/issue-(\d+)/ancestors','Ancestors',
     '/v1/users/(\d+)','User',
     '/(.*.ico)', 'StaticFile',   
     '/(.*.js)', 'StaticFile', 
@@ -66,7 +70,7 @@ class Issue:
         if not din["parent"]:
             din["parent"] = 0;# root mao
         try:
-            n = model.new_issue(din["title"],din["detail"],din["parent"],"user",din["isArticle"])
+            n = model.new_issue(din["title"],din["detail"],din["parent"],din["user"],din["isArticle"])
             dout["success"] = True
             dout["message"] = list(model.get_issues())
         except (KeyError):
