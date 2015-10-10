@@ -46,6 +46,36 @@ app.controller('postController', ['$scope', '$http',  function($scope, $http) {
         }
       });
     };
+    
+    $scope.lastPage = function(){
+    $http({
+      method  : 'GET',
+      url     : '/v2/issues/page-'+($scope.page - 1),
+      data    : $scope.input, 
+      headers : {'Content-Type': 'application/x-www-form-urlencoded'} 
+     })
+      .success(function(data) { // get return data here.
+        if (data.success) {
+            $scope.issues = data.message;
+            $scope.page = $scope.page - 1;
+        }
+      });
+    };
+    
+    $scope.nextPage = function(){
+    $http({
+      method  : 'GET',
+      url     : '/v2/issues/page-'+($scope.page + 1),
+      data    : $scope.input, 
+      headers : {'Content-Type': 'application/x-www-form-urlencoded'} 
+     })
+      .success(function(data) { // get return data here.
+        if (data.success) {
+            $scope.issues = data.message;
+            $scope.page = $scope.page + 1;
+        }
+      });
+    };
 
     $scope.init = function(ijson){
         $scope.issues = ijson;
@@ -53,6 +83,7 @@ app.controller('postController', ['$scope', '$http',  function($scope, $http) {
         $scope.input.parent = 0;
         $scope.input.user = 0;
         $scope.input.detail = "";
+        $scope.page = 1;
     };
     
     // markdown function here

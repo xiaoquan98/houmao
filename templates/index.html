@@ -3,7 +3,7 @@ $def with (issues_json)
 <div ng-controller="postController" ng-init="init($issues_json)">
 <h2>毛毛</h2>
 <input type="submit" value="Reflash" ng-click="getIssues()"/>
-
+<div><input type="submit" value="<<" ng-click="lastPage()"/> <span ng-click="">{{page}}</span> <input type="submit" value=">>" ng-click="nextPage()"/></div>
 <div ng-repeat="issue in issues"> 
     <div ng-show="issue.isArticle">
         <h3>{{issue.title}}</h3>

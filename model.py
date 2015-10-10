@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import web
 import sys 
+import myconfig
 default_encoding = 'utf-8' 
 if sys.getdefaultencoding() != default_encoding: 
     reload(sys) 
@@ -13,20 +14,23 @@ if sys.getdefaultencoding() != default_encoding:
 db = web.database(dbn='mysql', db='myissuedb', user='root',pw='850201',charset='utf8')
 
 def get_issues():
-    #OperationalError: (1049, "Unknown database 'myissuedb'")
-    #ProgrammingError: (1146, "Table 'myissuedb.issue' doesn't exist")
     try:
-        return db.select('issue', order='id')
-    except OperOperationalError:
-        print "no this database."
-    except ProgrammingError:
-        print "no this table."
+        return db.select('issue', order='id desc')
+    except:
+        print "no this database or table 0."
+        # db.query(myconfig.CREATEDB_QUERY)
+        db.query(myconfig.CREATETB_QUERY_ISSUE)
+        db.query(myconfig.CREATETB_QUERY_USER)
+
+def get_page(n):
+    offset = (int(n)-1)*myconfig.NUMBER_IN_PAGE
+    return db.select('issue', order='id desc',limit=myconfig.NUMBER_IN_PAGE,offset=offset)
 
 def  get_issue(id):
     return db.select('issue',where="id=$id", vars=locals())
 
 def new_issue(title,detail,parent,user,isArticle):
-     n = db.insert('issue',title=title,detail=detail,parent=parent,user=user,isArticle=isArticle)
+     n = db.insert('issue',title=title,detail=detail,parent=parent,authorId=user,isArticle=isArticle)
      return n;
 
 def del_issue(id):  
