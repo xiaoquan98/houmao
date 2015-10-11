@@ -1,5 +1,14 @@
 $def with (issues_json)
 
+<script type="text/ng-template" id="commentTree">
+<div ng-init="getComments(comment)">
+<div>{{comment.title}}</div>
+<div>{{comment.detail}}</div>
+<input type="submit" value="Show Comments" ng-click="getComments(comment)"/>
+<div ng-repeat="comment in comment.comments" ng-include="'commentTree'" ></div>
+</div>
+</script>
+
 <div ng-controller="postController" ng-init="init($issues_json)">
 <h2>毛毛</h2>
 <input type="submit" value="Reflash" ng-click="getIssues()"/>
@@ -17,8 +26,7 @@ $def with (issues_json)
         <input type="submit" value="Comment" ng-click="input.parent=issue.id"/>
         <input type="submit" value="Show Comments" ng-click="getComments(issue)"/>
         <div ng-show="issue.comments" >
-            <div ng-repeat="comment in issue.comments">
-                <div> 1 {{comment.detail}}</div>
+            <div ng-repeat="comment in issue.comments" ng-include="'commentTree'">
             </div>
         </div>
     </div>

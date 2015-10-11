@@ -222,3 +222,26 @@ function hashChange() {
     }
 }
 The only reason to change the hash at all is if you want to be able to come back to the page and have it load the same state based on the URL. So, you already have the requirement to let the URL drive the JavaScript, right? Else why are you changing the hash? Moving functionality out of click handlers, and into the hashchange event only simplifies things.
+
+
+# Building Nested Recursive Directives in Angular
+http://sporto.github.io/blog/2013/06/24/nested-recursive-directives-in-angular/
+
+# recursive template 
+http://benfoster.io/blog/angularjs-recursive-templates
+A much better solution is to use a template and render it recursively for each level in the tree. First we'll define an inline template:
+
+<script type="text/ng-template" id="categoryTree">
+    {{ category.title }}
+    <ul ng-if="category.categories">
+        <li ng-repeat="category in category.categories" ng-include="'categoryTree'">           
+        </li>
+    </ul>
+</script>
+For each category we display the title and then a nested list of its sub-categories by rendering the same template using ng-include.
+
+The final task is to kick of the recursive template with our root categories:
+
+<ul>
+    <li ng-repeat="category in categories" ng-include="'categoryTree'"></li>
+</ul>  

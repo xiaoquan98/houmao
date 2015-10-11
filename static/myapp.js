@@ -57,7 +57,7 @@ app.controller('postController', ['$scope', '$http',  function($scope, $http) {
       .success(function(data) { // get return data here.
         if (data.success) {
             is.comments = data.message;
-            alert("get children ok.");
+            // alert("get children ok.");
         }
       });
     };
