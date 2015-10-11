@@ -5,7 +5,7 @@ CREATE TABLE issue(
     title TEXT,
     detail TEXT,
     parent INT ,
-    authorId INT,
+    user INT,
     isArticle BOOLEAN,
     created timestamp default current_timestamp,
     modified timestamp default current_timestamp on update current_timestamp,

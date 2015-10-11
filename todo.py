@@ -61,10 +61,22 @@ class Issues:
 class Page:
     def GET(self, n):
         """ get issue json  """
+        n = int(n)
         web.header('Content-Type', 'application/json')
         dout = {};
         dout["success"] = True
         dout["message"] = list(model.get_page(n))
+        return json.dumps(dout,sort_keys=True,indent=2,default=json_serial)
+        
+class Children:
+    def GET(self, n):
+        """ get issue json  """
+        n = int(n)
+        web.header('Content-Type', 'application/json')
+        dout = {};
+        dout["success"] = True
+        dout["message"] = list(model.get_comments(n))
+        print json.dumps(dout,sort_keys=True,indent=2,default=json_serial)
         return json.dumps(dout,sort_keys=True,indent=2,default=json_serial)
         
 class Issue:

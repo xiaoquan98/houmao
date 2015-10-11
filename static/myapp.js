@@ -47,6 +47,21 @@ app.controller('postController', ['$scope', '$http',  function($scope, $http) {
       });
     };
     
+    $scope.getComments = function(is){
+    $http({
+      method  : 'GET',
+      url     : '/v2/issues/issue-'+is.id+'/children',
+      data    : $scope.input, 
+      headers : {'Content-Type': 'application/x-www-form-urlencoded'} 
+     })
+      .success(function(data) { // get return data here.
+        if (data.success) {
+            is.comments = data.message;
+            alert("get children ok.");
+        }
+      });
+    };
+    
     $scope.lastPage = function(){
     $http({
       method  : 'GET',

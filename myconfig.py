@@ -7,7 +7,7 @@ CREATETB_QUERY_ISSUE = """CREATE TABLE issue(
     title TEXT,
     detail TEXT,
     parent INT ,
-    authorId INT,
+    user INT,
     isArticle BOOLEAN,
     created timestamp default current_timestamp
 )DEFAULT CHARSET=utf8;"""

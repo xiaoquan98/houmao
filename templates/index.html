@@ -6,7 +6,7 @@ $def with (issues_json)
 <div><input type="submit" value="<<" ng-click="lastPage()"/> <span ng-click="">{{page}}</span> <input type="submit" value=">>" ng-click="nextPage()"/></div>
 <div ng-repeat="issue in issues"> 
     <div ng-show="issue.isArticle">
-        <h3>{{issue.title}}</h3>
+        <h3><span>{{issue.id}} </span>{{issue.title}}</h3>
         <div>
             <span ng-show="issue.user">user {{issue.user}} </span><span> Created @ {{issue.created}}</span>
             <span ng-hide="issue.created == issue.modified">  Last modified @ {{issue.modified}}</span>
@@ -15,6 +15,12 @@ $def with (issues_json)
         <div ng-show="issue.parent">从{{issue.parent}}#毛吹出来...</div>
         <input type="submit" value="Delete" ng-click="removeIssue(issue.id)"/>
         <input type="submit" value="Comment" ng-click="input.parent=issue.id"/>
+        <input type="submit" value="Show Comments" ng-click="getComments(issue)"/>
+        <div ng-show="issue.comments" >
+            <div ng-repeat="comment in issue.comments">
+                <div> 1 {{comment.detail}}</div>
+            </div>
+        </div>
     </div>
 </div>
 
