@@ -1,0 +1,40 @@
+.header{
+    background: #169;
+    color: #fff;
+    padding-top: 30px;
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+.contain{
+    background: #fff;
+    color: #000;
+    padding-right: 30px;
+    padding-left: 30px;
+}
+
+.postlist{
+}
+
+.post{
+    padding-top:30px;
+}
+
+.post h3{
+    border-bottom:2px solid #169;
+}
+
+#inputText{
+    width:100%;
+}
+
+#outputText{
+    min-height:52px;
+    width:100%;
+    border:2px solid #169;
+}
+
+.formcontrol input{
+    width: 60px;
+}
+
