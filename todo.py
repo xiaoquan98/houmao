@@ -93,13 +93,18 @@ class Issue:
         web.header('Content-Type', 'application/json')
         dout = {}
         din = json.loads(web.data().decode("utf-8-sig"));
+        
+        print "din: " + json.dumps(din,sort_keys=True,indent=2)
         if not din["parent"]:
             din["parent"] = 0;# root mao
         try:
+            if not "title" in din:
+                # print "add title."
+                din["title"] = "";
             n = model.new_issue(din["title"],din["detail"],din["parent"],din["user"],din["isArticle"])
             dout["success"] = True
             dout["message"] = list(model.get_issues())
-        except (KeyError):
+        except KeyError:
             dout["success"] = False
             dout["errors"] = "Title is required."
         finally:

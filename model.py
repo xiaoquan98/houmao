@@ -15,7 +15,7 @@ db = web.database(dbn='mysql', db='myissuedb', user='root',pw='idore',charset='u
 
 def get_issues():
     try:
-        return db.select('issue', order='id desc')
+        return db.select('issue', where="title is not null", order='id desc')
     except:
         print "no this database or table 0."
         # db.query(myconfig.CREATEDB_QUERY)
@@ -24,7 +24,7 @@ def get_issues():
 
 def get_page(n):
     offset = (n-1)*myconfig.NUMBER_IN_PAGE
-    return db.select('issue', order='id desc',limit=myconfig.NUMBER_IN_PAGE,offset=offset)
+    return db.select('issue', where="title is not null", order='id desc',limit=myconfig.NUMBER_IN_PAGE,offset=offset)
 
 def  get_issue(id):
     return db.select('issue',where="id=$id", vars=locals())
