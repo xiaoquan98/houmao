@@ -275,3 +275,18 @@ CREATE TABLE sessions(
 );
 
 
+
+
+# 【AngularJS系列7】路由概览
+http://www.cnblogs.com/reeoo/p/3605045.html
+
+ng的路由机制是靠ngRoute提供的，通过hash和history两种方式实现了路由，可以检测浏览器是否支持history来灵活调用相应的方式。ng的路由(ngRoute)是一个单独的模块，包含以下内容：
+
+服务$routeProvider用来定义一个路由表，即地址栏与视图模板的映射
+服务$routeParams保存了地址栏中的参数，例如{id : 1, name : 'tom'}
+服务$route完成路由匹配，并且提供路由相关的属性访问及事件，如访问当前路由对应的controller
+指令ngView用来在主视图中指定加载子视图的区域
+以上内容再加上$location服务，我们就可以实现一个单页面应用了。
+
+# AngularJS路由和模板
+http://blog.fens.me/angularjs-route-template/
