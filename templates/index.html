@@ -15,6 +15,12 @@ $def with (issues_json)
         <div> aoko...</div>
     </div>
     
+    <form ng-submit="Login()">
+        <input type="text" class="form-control" required ng-model="login.name" placeholder="输入用户名">
+        <input type="text" class="form-control" required ng-model="login.password" placeholder="输入密码">
+        <input value="登陆" class="btn btn-primary" type="submit"/>
+    </form>
+    
     <div class='contain'>
         <div class='postlist'>
             <div ng-repeat="issue in issues"> 

@@ -16,6 +16,21 @@ app.controller('postController', ['$scope', '$http',  function($scope, $http) {
       });
     };
     
+    $scope.Login = function() {
+    $http({
+      method  : 'POST',
+      url     : '/login',// new issue always use this address.
+      data    : $scope.login, 
+      headers : {'Content-Type': 'application/x-www-form-urlencoded'} 
+     })
+      .success(function(data) { // get return data here.
+        if(data.success){
+            //   $scope.issues = data.message;
+            alert("登陆成功.");
+        }
+      });
+    };
+    
     $scope.removeIssue = function(id){
     $http({
       method  : 'DELETE',

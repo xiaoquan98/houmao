@@ -19,6 +19,7 @@ urls = (
     '/(.*.ico)', 'StaticFile',   
     '/(.*.js)', 'StaticFile', 
     '/(.*.css)', 'StaticFile', 
+    '/login','Login',
    )
 
 
@@ -139,9 +140,41 @@ class User:
 class StaticFile:  
     def GET(self, file):  
         web.seeother('/static/'+file); 
+    
+# session & user login 
+def myloadhook():
+    global session
+    session = web.config._session
+class Login:
+    def POST(self):
+        myloadhook()
         
+        web.header('Content-Type', 'application/json')
+        dout = {}
+        
+        i = json.loads(web.data().decode("utf-8-sig"));
+        username =i.get('name',None)
+        password=i.get('password',None)
+        
+        session = web.config._session
+        if username == 'abcd' and password == '1234':
+            session.access_token = 'true'
+            # print "check user ok."
+            dout["success"] = True
+        else:
+            session.access_token = 'false'
+            dout["success"] = False
+        return json.dumps(dout,sort_keys=True,indent=2,default=json_serial)
+
 
 app = web.application(urls, globals())
+
+db = model.db
+store = web.session.DBStore(db, 'sessions')
+#session = web.session.Session(app, store, initializer={'access_token': 'true'})
+session = web.session.Session(app, store)
+web.config._session = session
+
 
 if __name__ == '__main__':
     app.run()

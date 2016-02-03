@@ -10,7 +10,6 @@ if sys.getdefaultencoding() != default_encoding:
 # else:
 #     print "sys encode utf-8"
 
-
 db = web.database(dbn='mysql', db='myissuedb', user='root',pw='850201',charset='utf8')
 
 def get_issues():

@@ -20,3 +20,9 @@ CREATE TABLE user(
 )DEFAULT CHARSET=utf8;
 
 drop table issue;// to remove table
+
+CREATE TABLE sessions(
+    session_id CHAR(128) UNIQUE NOT NULL,
+    atime timestamp NOT NULL default current_timestamp,
+    data TEXT
+);

@@ -245,3 +245,22 @@ The final task is to kick of the recursive template with our root categories:
 <ul>
     <li ng-repeat="category in categories" ng-include="'categoryTree'"></li>
 </ul>  
+
+
+======================= web.py port ===================
+python todo.py 1234 // listen on port 1234
+
+
+====================== 解决web.py在SAE云中的Session使用问题 =========
+http://www.cnblogs.com/chu888chu888/archive/2013/03/20/2971389.html
+
+#是否具有调试功能
+web.config.debug = False #一定要是False?
+
+DBStore. Session data is pickled and stored in a database. This can be useful if you want to store session data on a separate system. When creating, the DBStore takes 2 arguments: a web.py database instance, and the table name (string). The table which stores the session must have the following schema:
+
+CREATE TABLE sessions(
+    session_id CHAR(128) UNIQUE NOT NULL,
+    atime timestamp NOT NULL default current_timestamp,
+    data TEXT
+);
