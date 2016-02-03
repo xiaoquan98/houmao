@@ -13,65 +13,71 @@ $def with (issues_json)
     <div class='header'>
         <h2>毛毛</h2>
         <div> aoko...</div>
-        <input value="注销" class="btn btn-primary" ng-click="Logout()" ng-show="login.checked"/>
     </div>
-    
-    <form ng-submit="Login()" ng-hide="login.checked">
-        <input type="text" class="form-control" required ng-model="login.name" placeholder="输入用户名">
-        <input type="text" class="form-control" required ng-model="login.password" placeholder="输入密码">
-        <input value="登陆" class="btn btn-primary" type="submit"/>
-        <input value="注册" class="btn btn-primary" ng-click="Logup()"/>
-    </form>
-    
-    <div class='contain'>
-        <div class='postlist'>
-            <div ng-repeat="issue in issues"> 
-                <div class='post' ng-show="issue.isArticle">
-                    <h3><span>{{issue.id}} </span>{{issue.title}}</h3>
-                    <div>
-                        <span ng-show="issue.user">user {{issue.user}} </span><span> Created @ {{issue.created}}</span>
-                        <span ng-hide="issue.created == issue.modified">  Last modified @ {{issue.modified}}</span>
-                    </div>
-                    <div ng-model="issue.detail" markdown>{{issue.detail}}</div>
-                    <div ng-show="issue.parent">从{{issue.parent}}#毛吹出来...</div>
-                    <input type="submit" value="Delete" ng-click="removeIssue(issue.id)"/>
-                    <input type="submit" value="Comment" ng-click="input.parent=issue.id"/>
-                    <input type="submit" value="Show Comments" ng-click="getComments(issue)"/>
-                    <div ng-show="issue.comments" >
-                        <div ng-repeat="comment in issue.comments" ng-include="'commentTree'">
+    <div class='mainbox'>
+        <div class='sidebox'>
+            <input value="注销" class="btn btn-primary" ng-click="Logout()" ng-show="login.checked"/>
+            <form ng-hide="login.checked">
+                <input type="text" class="form-control" required ng-model="login.name" placeholder="输入用户名">
+                <input type="text" class="form-control" required ng-model="login.password" placeholder="输入密码">
+                <input value="登陆" class="btn btn-primary" ng-click="Login()"/>
+                <input value="注册" class="btn btn-primary" ng-click="Logup()"/>
+            </form>
+        </div>
+        
+        <div class='contain'>
+            <div class='postlist'>
+                <div ng-repeat="issue in issues"> 
+                    <div class='post' ng-show="issue.isArticle">
+                        <h3><span>{{issue.id}} </span>{{issue.title}}</h3>
+                        <div>
+                            <span ng-show="issue.user">user {{issue.user}} </span><span> Created @ {{issue.created}}</span>
+                            <span ng-hide="issue.created == issue.modified">  Last modified @ {{issue.modified}}</span>
+                        </div>
+                        <div ng-model="issue.detail" markdown>{{issue.detail}}</div>
+                        <div ng-show="issue.parent">从{{issue.parent}}#毛吹出来...</div>
+                        <input type="submit" value="Delete" ng-click="removeIssue(issue.id)"/>
+                        <input type="submit" value="Comment" ng-click="input.parent=issue.id"/>
+                        <input type="submit" value="Show Comments" ng-click="getComments(issue)"/>
+                        <div ng-show="issue.comments" >
+                            <div ng-repeat="comment in issue.comments" ng-include="'commentTree'">
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+            
+            <form name="issueForm" ng-submit="newIssue()" ng-init="preview=false">
+                <h3>吹一吹...</h3>
+                <div class="form-group">
+                    <label>作为文章发布</label>
+                    <input type="checkbox" name="isArticle" ng-model="input.isArticle">
+                </div>
+                <div class="form-group" ng-show="input.isArticle">
+                    <label>标题</label>
+                    <input type="text" name="title" class="form-control" ng-model="input.title" ng-required="input.isArticle">
+                </div>
+                <div class="form-group" ng-hide="preview">
+                    <label>正文</label>
+                    <textarea class="form-control" id="inputText" ng-model="markedinputText" auto-grow required></textarea>
+                </div>
+                <div class='form-group' ng-show="preview">
+                    <label>发布效果</label>
+                    <div id="outputText" ng-bind-html="markedoutputText"></div>
+                </div>
+                <div class='formcontrol'>
+                    <input value="预览" class="btn btn-primary" ng-click="preview=true" ng-hide="preview"/>
+                    <input value="编辑" class="btn btn-primary" ng-click="preview=false" ng-show="preview"/>
+                    <input value="提交" class="btn btn-primary" type="submit"/>
+                </div>
+            </form>
+            
+            <div><input type="submit" value="上一页" ng-show="page != 1" ng-click="lastPage()"/> <span ng-click="">{{page}}</span> <input type="submit" value="下一页" ng-click="nextPage()"/></div>
+    
         </div>
-        
-        <form name="issueForm" ng-submit="newIssue()" ng-init="preview=false">
-            <h3>吹一吹...</h3>
-            <div class="form-group">
-                <label>作为文章发布</label>
-                <input type="checkbox" name="isArticle" ng-model="input.isArticle">
-            </div>
-            <div class="form-group" ng-show="input.isArticle">
-                <label>标题</label>
-                <input type="text" name="title" class="form-control" ng-model="input.title" ng-required="input.isArticle">
-            </div>
-            <div class="form-group" ng-hide="preview">
-                <label>正文</label>
-                <textarea class="form-control" id="inputText" ng-model="markedinputText" auto-grow required></textarea>
-            </div>
-            <div class='form-group' ng-show="preview">
-                <label>发布效果</label>
-                <div id="outputText" ng-bind-html="markedoutputText"></div>
-            </div>
-            <div class='formcontrol'>
-                <input value="预览" class="btn btn-primary" ng-click="preview=true" ng-hide="preview"/>
-                <input value="编辑" class="btn btn-primary" ng-click="preview=false" ng-show="preview"/>
-                <input value="提交" class="btn btn-primary" type="submit"/>
-            </div>
-        </form>
-        
-        <div><input type="submit" value="上一页" ng-show="page != 1" ng-click="lastPage()"/> <span ng-click="">{{page}}</span> <input type="submit" value="下一页" ng-click="nextPage()"/></div>
-
+    </div>
+    <div class='footer'>
+        aoko made this.
     </div>
 
 </div>

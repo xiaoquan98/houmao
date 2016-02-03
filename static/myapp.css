@@ -11,6 +11,20 @@
     color: #000;
     padding-right: 30px;
     padding-left: 30px;
+    float:left;
+    width:80%;
+}
+
+.sidebox{
+    float:right;
+    margin-top:30px;
+    width:19%;
+}
+
+.footer{
+    clear:both;
+    background:#345;
+    height:50px;
 }
 
 .postlist{
