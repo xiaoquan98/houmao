@@ -11,7 +11,7 @@ if sys.getdefaultencoding() != default_encoding:
 #     print "sys encode utf-8"
 
 
-db = web.database(dbn='mysql', db='myissuedb', user='root',pw='idore',charset='utf8')
+db = web.database(dbn='mysql', db='myissuedb', user='root',pw='850201',charset='utf8')
 
 def get_issues():
     try:
@@ -26,23 +26,23 @@ def get_page(n):
     offset = (n-1)*myconfig.NUMBER_IN_PAGE
     return db.select('issue', where="isArticle=True", order='id desc',limit=myconfig.NUMBER_IN_PAGE,offset=offset)
 
-def  get_issue(id):
+def get_issue(id):
     return db.select('issue',where="id=$id", vars=locals())
 
 def new_issue(title,detail,parent,user,isArticle):
-     n = db.insert('issue',title=title,detail=detail,parent=parent,user=user,isArticle=isArticle)
-     return n;
+    n = db.insert('issue',title=title,detail=detail,parent=parent,user=user,isArticle=isArticle)
+    return n;
 
 def del_issue(id):  
     db.delete('issue', where="id=$id", vars=locals())
     
-def  get_comments(id):
+def get_comments(id):
     return db.select('issue',where="parent=$id",order='id', vars=locals())
 
 def get_users():
     return db.select('user', order='id')
 
-def  get_user(id):
+def get_user(id):
     return db.select('user',where="id=$id", vars=locals())
 
 def new_user(name,password):
