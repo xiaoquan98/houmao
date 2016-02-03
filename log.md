@@ -255,7 +255,16 @@ python todo.py 1234 // listen on port 1234
 http://www.cnblogs.com/chu888chu888/archive/2013/03/20/2971389.html
 
 #是否具有调试功能
-web.config.debug = False #一定要是False?
+web.config.debug = False #一定要是False 不是的，如下
+Sessions and Reloading/Debug Mode
+Is your session data disappearing for seemingly no reason? This can happen when using the web.py app reloader (local debug mode), which will not persist the session object between reloads. Here's a nifty hack to get around this.
+
+# Hack to make session play nice with the reloader (in debug mode)
+if web.config.get('_session') is None:
+    session = web.session.Session(app, db.SessionDBStore())
+    web.config._session = session
+else:
+    session = web.config._session
 
 DBStore. Session data is pickled and stored in a database. This can be useful if you want to store session data on a separate system. When creating, the DBStore takes 2 arguments: a web.py database instance, and the table name (string). The table which stores the session must have the following schema:
 

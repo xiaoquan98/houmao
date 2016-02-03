@@ -144,7 +144,15 @@ class StaticFile:
 # session & user login 
 def myloadhook():
     global session
-    session = web.config._session
+    # Hack to make session play nice with the reloader (in debug mode)
+    if web.config.get('_session') is None:
+        db = model.db
+        store = web.session.DBStore(db, 'sessions')
+        session = web.session.Session(app, store)
+        web.config._session = session
+    else:
+        session = web.config._session
+        
 class Login:
     def POST(self):
         myloadhook()
@@ -168,12 +176,6 @@ class Login:
 
 
 app = web.application(urls, globals())
-
-db = model.db
-store = web.session.DBStore(db, 'sessions')
-#session = web.session.Session(app, store, initializer={'access_token': 'true'})
-session = web.session.Session(app, store)
-web.config._session = session
 
 
 if __name__ == '__main__':
