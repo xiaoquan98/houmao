@@ -5,6 +5,8 @@ import json
 import datetime
 import myconfig
 
+web.config.debug = False
+
 ### Url mappings
 
 urls = (
@@ -35,7 +37,15 @@ json_serial = lambda obj: (
     else None
 )
 
-
+def Auth(func):
+    def wrapper(*args, **kwargs):
+        sessionhook()
+        au = session.get('access_token', "false")
+        if au == 'true':
+            return func(*args, **kwargs)
+        return "not auth."
+    return wrapper
+    
 class Index:
     def GET(self):
         """ Show page """
@@ -92,6 +102,7 @@ class Issue:
         dout["message"] = list(model.get_issue(id))
         return json.dumps(dout,sort_keys=True,indent=2,default=json_serial)
 
+    @Auth
     def POST(self,id):
         web.header('Content-Type', 'application/json')
         dout = {}
@@ -114,6 +125,7 @@ class Issue:
             # print json.dumps(dout,sort_keys=True,indent=2)
             return json.dumps(dout,sort_keys=True,indent=2,default=json_serial)
             
+    @Auth
     def DELETE(self,id):
         web.header('Content-Type', 'application/json')
         id = int(id)
@@ -150,7 +162,7 @@ def sessionhook():
     if web.config.get('_session') is None:
         db = model.db
         store = web.session.DBStore(db, 'sessions')
-        session = web.session.Session(app, store)
+        session = web.session.Session(app, store, initializer={'access_token': "false"})
         web.config._session = session
     else:
         session = web.config._session
@@ -211,7 +223,7 @@ class Logout:
         # print "check user ok."
         dout["success"] = True
         return json.dumps(dout,sort_keys=True,indent=2,default=json_serial)
-
+        
 app = web.application(urls, globals())
 
 
