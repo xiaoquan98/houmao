@@ -15,20 +15,61 @@ app.controller('postController', ['$scope', '$http',  function($scope, $http) {
         }
       });
     };
+
+    $scope.Logup = function() {
+      $http({
+       method  : 'POST',
+       url     : '/logup',// new issue always use this address.
+       data    : $scope.login, 
+       headers : {'Content-Type': 'application/x-www-form-urlencoded'} 
+      })
+       .success(function(data) { // get return data here.
+         if(data.success){
+             //   $scope.issues = data.message;
+            //  alert("注册成功.");
+            $scope.login.checked = true;
+         }else{
+            $scope.login.checked = false;
+            $scope.login.password = "";
+         }
+       });
+    
+    };
     
     $scope.Login = function() {
-    $http({
-      method  : 'POST',
-      url     : '/login',// new issue always use this address.
-      data    : $scope.login, 
-      headers : {'Content-Type': 'application/x-www-form-urlencoded'} 
-     })
-      .success(function(data) { // get return data here.
-        if(data.success){
-            //   $scope.issues = data.message;
-            alert("登陆成功.");
-        }
-      });
+        $http({
+          method  : 'POST',
+          url     : '/login',// new issue always use this address.
+          data    : $scope.login, 
+          headers : {'Content-Type': 'application/x-www-form-urlencoded'} 
+         })
+          .success(function(data) { // get return data here.
+            if(data.success){
+                //   $scope.issues = data.message;
+                // alert("登陆成功.");
+                $scope.login.checked = true;
+            }else{
+               $scope.login.checked = false;
+               $scope.login.password = "";
+            }
+          });
+    };
+    
+    $scope.Logout = function() {
+        $http({
+          method  : 'POST',
+          url     : '/logout',// new issue always use this address.
+          data    : $scope.login, 
+          headers : {'Content-Type': 'application/x-www-form-urlencoded'} 
+         })
+          .success(function(data) { // get return data here.
+            if(data.success){
+                $scope.login.checked = false;
+                $scope.login.password = "";
+            }else{
+               $scope.login.checked = true; 
+            }
+          });
     };
     
     $scope.removeIssue = function(id){

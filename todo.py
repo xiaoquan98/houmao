@@ -19,7 +19,9 @@ urls = (
     '/(.*.ico)', 'StaticFile',   
     '/(.*.js)', 'StaticFile', 
     '/(.*.css)', 'StaticFile', 
+    '/logup','Logup',
     '/login','Login',
+    '/logout','Logout',
    )
 
 
@@ -142,7 +144,7 @@ class StaticFile:
         web.seeother('/static/'+file); 
     
 # session & user login 
-def myloadhook():
+def sessionhook():
     global session
     # Hack to make session play nice with the reloader (in debug mode)
     if web.config.get('_session') is None:
@@ -153,19 +155,43 @@ def myloadhook():
     else:
         session = web.config._session
         
-class Login:
+        
+class Logup:
     def POST(self):
-        myloadhook()
+        sessionhook()
         
         web.header('Content-Type', 'application/json')
         dout = {}
         
         i = json.loads(web.data().decode("utf-8-sig"));
         username =i.get('name',None)
-        password=i.get('password',None)
+        password =i.get('password',None)
         
         session = web.config._session
-        if username == 'abcd' and password == '1234':
+        if model.new_user(username,password): 
+        # if username == 'abcd' and password == '1234':
+            session.access_token = 'true'
+            # print "check user ok."
+            dout["success"] = True
+        else:
+            session.access_token = 'false'
+            dout["success"] = False
+        return json.dumps(dout,sort_keys=True,indent=2,default=json_serial)
+        
+class Login:
+    def POST(self):
+        sessionhook()
+        
+        web.header('Content-Type', 'application/json')
+        dout = {}
+        
+        i = json.loads(web.data().decode("utf-8-sig"));
+        username =i.get('name',None)
+        password =i.get('password',None)
+        
+        session = web.config._session
+        if model.check_user(username,password): 
+        # if username == 'abcd' and password == '1234':
             session.access_token = 'true'
             # print "check user ok."
             dout["success"] = True
@@ -174,6 +200,17 @@ class Login:
             dout["success"] = False
         return json.dumps(dout,sort_keys=True,indent=2,default=json_serial)
 
+class Logout:
+    def POST(self):
+        sessionhook()
+        
+        web.header('Content-Type', 'application/json')
+        dout = {}
+        session = web.config._session
+        session.access_token = 'false'
+        # print "check user ok."
+        dout["success"] = True
+        return json.dumps(dout,sort_keys=True,indent=2,default=json_serial)
 
 app = web.application(urls, globals())
 

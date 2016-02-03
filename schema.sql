@@ -25,4 +25,4 @@ CREATE TABLE sessions(
     session_id CHAR(128) UNIQUE NOT NULL,
     atime timestamp NOT NULL default current_timestamp,
     data TEXT
-);
+);nams

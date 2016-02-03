@@ -47,6 +47,9 @@ def get_user(id):
 def new_user(name,password):
     n = db.insert('user',name=name,password=password)
     return n
+    
+def check_user(name,password):
+    return db.select('user',where="name=$name and password=$password", vars=locals())
 
 if __name__ == '__main__':
     n = new_issue("hi",u"and hello大饭店梵蒂冈203",1,1,True);

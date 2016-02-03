@@ -13,12 +13,14 @@ $def with (issues_json)
     <div class='header'>
         <h2>毛毛</h2>
         <div> aoko...</div>
+        <input value="注销" class="btn btn-primary" ng-click="Logout()" ng-show="login.checked"/>
     </div>
     
-    <form ng-submit="Login()">
+    <form ng-submit="Login()" ng-hide="login.checked">
         <input type="text" class="form-control" required ng-model="login.name" placeholder="输入用户名">
         <input type="text" class="form-control" required ng-model="login.password" placeholder="输入密码">
         <input value="登陆" class="btn btn-primary" type="submit"/>
+        <input value="注册" class="btn btn-primary" ng-click="Logup()"/>
     </form>
     
     <div class='contain'>
