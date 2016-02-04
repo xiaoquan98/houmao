@@ -1,5 +1,29 @@
-<div>
+<div ng-init='getIssues()'>
     this is list.html
     
     <a href="#/list/1"> detail</a>
+    
+    <div class='postlist'>
+        <div ng-repeat="issue in issues"> 
+            <div class='post' ng-show="issue.isArticle">
+                <a href="#/list/{{issue.id}}">
+                    <h3><span>{{issue.id}} </span>{{issue.title}}</h3>
+                </a>
+                <div>
+                    <span ng-show="issue.user">user {{issue.user}} </span><span> Created @ {{issue.created}}</span>
+                    <span ng-hide="!issue.modified || issue.created == issue.modified">  Last modified @ {{issue.modified}}</span>
+                </div>
+                <div ng-model="issue.detail" markdown>{{issue.detail}}</div>
+                <div ng-show="issue.parent">从{{issue.parent}}#毛吹出来...</div>
+                <input type="submit" value="Delete" ng-click="removeIssue(issue.id)"/>
+                <input type="submit" value="Comment" ng-click="input.parent=issue.id"/>
+                <input type="submit" value="Show Comments" ng-click="getComments(issue)"/>
+                <div ng-show="issue.comments" >
+                    <div ng-repeat="comment in issue.comments" ng-include="'commentTree'">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>

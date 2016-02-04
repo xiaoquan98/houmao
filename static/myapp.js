@@ -1,11 +1,10 @@
 var app = angular.module('issueApp', ['ngSanitize','ngRoute']);
-app.controller('postController', ['$scope', '$http',  function($scope, $http) {
-    $scope.issues = [];
+app.controller('mainController', ['$scope', '$http',  function($scope, $http) {
     $scope.input = {};
     $scope.newIssue = function() {
     $http({
       method  : 'POST',
-      url     : '/v1/issues/0',// new issue always use this address.
+      url     : '/v2/issues/issue-0',// new issue always use this address.
       data    : $scope.input, 
       headers : {'Content-Type': 'application/x-www-form-urlencoded'} 
      })
@@ -59,7 +58,6 @@ app.controller('postController', ['$scope', '$http',  function($scope, $http) {
         $http({
           method  : 'POST',
           url     : '/logout',// new issue always use this address.
-          data    : $scope.login, 
           headers : {'Content-Type': 'application/x-www-form-urlencoded'} 
          })
           .success(function(data) { // get return data here.
@@ -71,11 +69,48 @@ app.controller('postController', ['$scope', '$http',  function($scope, $http) {
             }
           });
     };
+
+    $scope.init = function(){
+        $scope.input.isArticle = false;
+        $scope.input.parent = 0;
+        $scope.input.user = 0;
+        $scope.input.detail = "";
+    };
+    
+    // markdown function here
+    $scope.markedinputText = "";
+    $scope.markedoutputText = "";
+    $scope.$watch('markedinputText', function(current, original) {
+      $scope.markedoutputText = marked(current);
+      $scope.input.detail = current;
+    });
+        
+    }    
+]);
+
+app.config(['$routeProvider',function ($routeProvider) {
+      $routeProvider
+      .when('/list', {
+        templateUrl: 'view/list.html',
+        controller: 'RouteListCtl'
+      })
+      .when('/list/:id', {
+        templateUrl: 'view/detail.html',
+        controller: 'RouteDetailCtl'
+      })
+      .otherwise({
+        redirectTo: '/list'
+      });
+}]);
+    
+app.controller('RouteListCtl', ['$scope', '$http',  function($scope, $http) {
+    $scope.issues = [];
+    $scope.page = 1;
     
     $scope.removeIssue = function(id){
     $http({
       method  : 'DELETE',
-      url     : '/v1/issues/'+id,
+      url     : '/v2/issues/issue-'+id,
       data    : $scope.input, 
       headers : {'Content-Type': 'application/x-www-form-urlencoded'} 
      })
@@ -88,7 +123,7 @@ app.controller('postController', ['$scope', '$http',  function($scope, $http) {
         }
       });
     };
-
+    
     $scope.getIssues = function(){
     $http({
       method  : 'GET',
@@ -147,27 +182,56 @@ app.controller('postController', ['$scope', '$http',  function($scope, $http) {
         }
       });
     };
-
-    $scope.init = function(ijson){
-        $scope.issues = ijson;
-        $scope.input.isArticle = false;
-        $scope.input.parent = 0;
-        $scope.input.user = 0;
-        $scope.input.detail = "";
-        $scope.page = 1;
-    };
     
-    // markdown function here
-    $scope.markedinputText = "";
-    $scope.markedoutputText = "";
-    $scope.$watch('markedinputText', function(current, original) {
-      $scope.markedoutputText = marked(current);
-      $scope.input.detail = current;
-    });
-        
-    }    
-]);
+}]);
 
+app.controller('RouteDetailCtl', ['$scope', '$http', '$routeParams', function($scope, $http, $routeParams) {
+    $scope.issues = [];
+    $scope.id = $routeParams.id;
+    
+    $scope.removeIssue = function(id){
+    $http({
+      method  : 'DELETE',
+      url     : '/v2/issues/issue-'+id,
+      headers : {'Content-Type': 'application/x-www-form-urlencoded'} 
+     })
+      .success(function(data) { // get return data here.
+        if (data.success) {
+            //   alert("success to delete.");
+            $scope.issues = data.message;
+        } else {
+            alert("fail to delete.");
+        }
+      });
+    };
+
+    $scope.getIssue = function(id){
+    $http({
+      method  : 'GET',
+      url     : '/v2/issues/issue-'+id,
+      headers : {'Content-Type': 'application/x-www-form-urlencoded'} 
+     })
+      .success(function(data) { // get return data here.
+        if (data.success) {
+            $scope.issues = data.message;
+        }
+      });
+    };
+
+    $scope.getComments = function(is){
+    $http({
+      method  : 'GET',
+      url     : '/v2/issues/issue-'+is.id+'/children',
+      headers : {'Content-Type': 'application/x-www-form-urlencoded'} 
+     })
+      .success(function(data) { // get return data here.
+        if (data.success) {
+            is.comments = data.message;
+            // alert("get children ok.");
+        }
+      });
+    };
+}]);
 
 app.directive("markdown", function(){
   return function(scope, element, attr){
@@ -194,28 +258,6 @@ app.directive("autoGrow", function(){
       attr.$set("ngTrim", "false");
   };
 });
-
-app.config(['$routeProvider',function ($routeProvider) {
-          $routeProvider
-          .when('/list', {
-            templateUrl: 'view/list.html',
-            controller: 'RouteListCtl'
-          })
-          .when('/list/:id', {
-              templateUrl: 'view/detail.html',
-              controller: 'RouteDetailCtl'
-          })
-          .otherwise({
-            redirectTo: '/list'
-          });
-    }]);
-    
-app.controller('RouteListCtl',function($scope) {
-});
-app.controller('RouteDetailCtl',function($scope, $routeParams) {
-    $scope.id = $routeParams.id;
-});
-
 
 marked.setOptions({
     renderer: new marked.Renderer(),

@@ -50,11 +50,7 @@ def Auth(func):
 class Index:
     def GET(self):
         """ Show page """
-        try:
-            issues = list(model.get_page(1))
-            return render.index(json.dumps(issues,default=json_serial))
-        except :
-            return render.index("")
+        return render.index()
 
     def POST(self):
         """" do nothing with POST """
