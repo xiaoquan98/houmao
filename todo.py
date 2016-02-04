@@ -44,7 +44,11 @@ def Auth(func):
         au = session.get('access_token', "false")
         if au == 'true':
             return func(*args, **kwargs)
-        return "not auth."
+        web.header('Content-Type', 'application/json')
+        dout = {}
+        dout["success"] = False
+        dout["errors"] = "auth fail"
+        return json.dumps(dout,sort_keys=True,indent=2,default=json_serial)
     return wrapper
     
 class Index:

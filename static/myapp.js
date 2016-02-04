@@ -224,6 +224,8 @@ app.controller('RouteDetailCtl', ['$scope', '$http', '$routeParams', function($s
                     break;
                 }
             }
+        }else if(data.errors == "auth fail"){
+            alert('请注销后再登陆一下.');
         }
       });
     };
