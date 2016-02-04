@@ -218,7 +218,12 @@ app.controller('RouteDetailCtl', ['$scope', '$http', '$routeParams', function($s
      })
       .success(function(data) { // get return data here.
         if(data.success){
-          $scope.issues = data.message;
+            for(i=0;i<$scope.issues.length;i++){
+                if ($scope.issues[i].id == $scope.input.parent){
+                    $scope.issues[i].comments = data.message;
+                    break;
+                }
+            }
         }
       });
     };

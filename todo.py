@@ -114,7 +114,8 @@ class Issue:
                 din["title"] = "";
             n = model.new_issue(din["title"],din["detail"],din["parent"],din["user"],din["isArticle"])
             dout["success"] = True
-            dout["message"] = list(model.get_issues())
+            if din["parent"]:
+                dout["message"] = list(model.get_comments(din["parent"]))
         except KeyError:
             dout["success"] = False
             dout["errors"] = "Title is required."
