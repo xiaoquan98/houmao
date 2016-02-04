@@ -119,7 +119,7 @@ class Issue:
             dout["success"] = False
             dout["errors"] = "Title is required."
         finally:
-            # print json.dumps(dout,sort_keys=True,indent=2)
+            # print json.dumps(dout,sort_keys=True,indent=2,default=json_serial)
             return json.dumps(dout,sort_keys=True,indent=2,default=json_serial)
             
     @Auth

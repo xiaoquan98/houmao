@@ -19,40 +19,11 @@
             <div class='routerview'>
                 <div ng-view></div>
             </div>
-            
-            <form name="issueForm" ng-submit="newIssue()" ng-init="preview=false">
-                <h3>吹一吹...</h3>
-                <div class="form-group">
-                    <label>作为文章发布</label>
-                    <input type="checkbox" name="isArticle" ng-model="input.isArticle">
-                </div>
-                <div class="form-group" ng-show="input.isArticle">
-                    <label>标题</label>
-                    <input type="text" name="title" class="form-control" ng-model="input.title" ng-required="input.isArticle">
-                </div>
-                <div class="form-group" ng-hide="preview">
-                    <label>正文</label>
-                    <textarea class="form-control" id="inputText" ng-model="markedinputText" auto-grow required></textarea>
-                </div>
-                <div class='form-group' ng-show="preview">
-                    <label>发布效果</label>
-                    <div id="outputText" ng-bind-html="markedoutputText"></div>
-                </div>
-                <div class='formcontrol'>
-                    <input value="预览" class="btn btn-primary" ng-click="preview=true" ng-hide="preview"/>
-                    <input value="编辑" class="btn btn-primary" ng-click="preview=false" ng-show="preview"/>
-                    <input value="提交" class="btn btn-primary" type="submit"/>
-                </div>
-            </form>
-            
         </div>
+        
     </div>
     <div class='footer'>
         aoko made this.
     </div>
 
 </div>
-
-
-
-

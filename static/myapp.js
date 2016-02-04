@@ -1,20 +1,5 @@
 var app = angular.module('issueApp', ['ngSanitize','ngRoute']);
 app.controller('mainController', ['$scope', '$http',  function($scope, $http) {
-    $scope.input = {};
-    $scope.newIssue = function() {
-    $http({
-      method  : 'POST',
-      url     : '/v2/issues/issue-0',// new issue always use this address.
-      data    : $scope.input, 
-      headers : {'Content-Type': 'application/x-www-form-urlencoded'} 
-     })
-      .success(function(data) { // get return data here.
-        if(data.success){
-          $scope.issues = data.message;
-        }
-      });
-    };
-
     $scope.Logup = function() {
       $http({
        method  : 'POST',
@@ -69,24 +54,7 @@ app.controller('mainController', ['$scope', '$http',  function($scope, $http) {
             }
           });
     };
-
-    $scope.init = function(){
-        $scope.input.isArticle = false;
-        $scope.input.parent = 0;
-        $scope.input.user = 0;
-        $scope.input.detail = "";
-    };
-    
-    // markdown function here
-    $scope.markedinputText = "";
-    $scope.markedoutputText = "";
-    $scope.$watch('markedinputText', function(current, original) {
-      $scope.markedoutputText = marked(current);
-      $scope.input.detail = current;
-    });
-        
-    }    
-]);
+}]);
 
 app.config(['$routeProvider',function ($routeProvider) {
       $routeProvider
@@ -231,6 +199,38 @@ app.controller('RouteDetailCtl', ['$scope', '$http', '$routeParams', function($s
         }
       });
     };
+
+    $scope.init = function(id){
+        $scope.input.isArticle = false;
+        $scope.input.parent = 0;
+        $scope.input.user = 0;
+        $scope.input.detail = "";
+        $scope.getIssue(id);
+    };
+    
+    $scope.input = {};
+    $scope.newIssue = function() {
+    $http({
+      method  : 'POST',
+      url     : '/v2/issues/issue-0',// new issue always use this address.
+      data    : $scope.input, 
+      headers : {'Content-Type': 'application/x-www-form-urlencoded'} 
+     })
+      .success(function(data) { // get return data here.
+        if(data.success){
+          $scope.issues = data.message;
+        }
+      });
+    };
+
+    // markdown function here
+    $scope.markedinputText = "";
+    $scope.markedoutputText = "";
+    $scope.$watch('markedinputText', function(current, original) {
+      $scope.markedoutputText = marked(current);
+      $scope.input.detail = current;
+    });
+        
 }]);
 
 app.directive("markdown", function(){

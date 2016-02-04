@@ -149,7 +149,8 @@ You do need to use it if you are going to run code in a new turn. And only if th
 
 ==================== markdown editor ? =======================
 https://github.com/zacharyvoase/markdoc/tree/master/src/markdoc
-
+按照下面语法来写。
+http://wowubuntu.com/markdown/
 
 ====================== bootstrap ======================
 bootstrap is powerful, we should use it sometime, but not now.
