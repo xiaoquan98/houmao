@@ -1,4 +1,4 @@
-var app = angular.module('issueApp', ['ngSanitize']);
+var app = angular.module('issueApp', ['ngSanitize','ngRoute']);
 app.controller('postController', ['$scope', '$http',  function($scope, $http) {
     $scope.issues = [];
     $scope.input = {};
@@ -193,6 +193,27 @@ app.directive("autoGrow", function(){
       });
       attr.$set("ngTrim", "false");
   };
+});
+
+app.config(['$routeProvider',function ($routeProvider) {
+          $routeProvider
+          .when('/list', {
+            templateUrl: 'view/list.html',
+            controller: 'RouteListCtl'
+          })
+          .when('/list/:id', {
+              templateUrl: 'view/detail.html',
+              controller: 'RouteDetailCtl'
+          })
+          .otherwise({
+            redirectTo: '/list'
+          });
+    }]);
+    
+app.controller('RouteListCtl',function($scope) {
+});
+app.controller('RouteDetailCtl',function($scope, $routeParams) {
+    $scope.id = $routeParams.id;
 });
 
 

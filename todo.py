@@ -21,6 +21,7 @@ urls = (
     '/(.*.ico)', 'StaticFile',   
     '/(.*.js)', 'StaticFile', 
     '/(.*.css)', 'StaticFile', 
+    '/view/(.*.html)','StaticFile',
     '/logup','Logup',
     '/login','Login',
     '/logout','Logout',

@@ -26,6 +26,10 @@ $def with (issues_json)
         </div>
         
         <div class='contain'>
+            <div class='routerview'>
+                <div ng-view></div>
+            </div>
+            
             <div class='postlist'>
                 <div ng-repeat="issue in issues"> 
                     <div class='post' ng-show="issue.isArticle">
